@@ -1,4 +1,3 @@
 
-# def chat(query):
-#     openai.api_key = apikey
-#     chat
+                                    qr.add_data(site[1])
+                                    qr.make(fit = True)

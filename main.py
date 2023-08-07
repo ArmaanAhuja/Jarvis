@@ -1,15 +1,19 @@
 import speech_recognition as sr
 import pyttsx3 as audio
+import qrcode
+from PIL import Image
 import datetime
 # from selenium import webdriver
 import webbrowser
 import win32com.client
 import openai
 import subprocess
+import os 
+
+
 speaker = win32com.client.Dispatch("SAPI.SpVoice")
 engine = audio.init()
 
-import os 
 
 # driver = webdriver.Chrome()
 print("everything worked fine")
@@ -61,6 +65,10 @@ if __name__ == '__main__':
     say("JARVIS AI HERE")
     # say2("JARVIS AI HERE")
     sites = [["youtube", "https://www.youtube.com"], ["wikipedia", "https://www.wikipedia.org"], ['google', 'https://www.google.com'], ["xvideos", 'https://www.xvideos53.com'], ['discord', 'https://www.discord.com'], ['instagram', 'https://www.instagram.com']]
+
+    colors = ["violet", "indigo", "blue", "green", "yellow", "orange", "red"]
+
+
     while True: 
         text = takeCommand()
         if "jarvis shut down" in text.lower():
@@ -116,6 +124,43 @@ if __name__ == '__main__':
             # os.system(downloadsPath)
             # os.open(downloadsPath, os.O_RDWR, 0o666)
             os.startfile(downloadsPath)
+
+
+        elif "qr code for" in text.lower(): 
+            # print("true")
+            if "normal" in text.lower(): 
+                # print("true again")
+                for site in sites: 
+                    if site[0] in text.lower():
+                        print(f"Generating a normal qr code for site {site[0]}") 
+                        say(f"Generating a normal qr code for site {site[0]}")
+                        img = qrcode.make(site[1])
+                        img.save(f"jarvis/assets/qr/{site[0]}.png")
+                    
+            for color in colors: 
+                if (f"background colour {color}") in text.lower(): 
+                    print("true 2")
+                    for color2 in colors: 
+                        if(f"foreground colour {color2}") or (f"4 ground colour {color2}") in text.lower():
+                            for site in sites: 
+                                if site[0] in text.lower(): 
+                                    qr = qrcode.QRCode(
+                                            version = 1,  
+                                            error_correction = qrcode.constants.ERROR_CORRECT_H, 
+                                            box_size = 10, border = 4)
+                                    
+                                    qr.add_data(site[1])
+                                    qr.make(fit = True)
+                                    img = qr.make_image(fill_color = color2, back_color = color)
+                                    img.save(f"jarvis/assets/qrColored/{site[0]}.png")
+                                     
+
+                                    
+
+
+                     
+
+
 
 
             
